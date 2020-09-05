@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="d3.v4.min.js"></script>
+</head>
+<body>
+<svg width="1000" height="1000"></svg>
+<script type="text/javascript">
+
+     function vercsv1(data){
+         data.forEach(function (d,i) {
+             console.log(d.intervalo)
+             console.log(d.cantidad)
+         });
+                  // esto es lo mas complejo de entender en d3
+         // d3.select("svg")
+         // .selectAll("rect")
+         // .data(data[0])
+         // // dsps del enter se asigna a cada elemento que quedo sin pareja se le añade un rect con esos atributos
+         // .enter().append("rect")
+         // .attr("width", 50)
+         // .attr("height", function (d) {
+         //     return d;
+         // })
+         // .attr("x", function (d, i) {
+         //     return i * 60;
+         // })
+         // .attr("y", function (d, i) {
+         //     return 500 - d;
+         // })
+         // .attr("rx", "15")
+         // .attr("ry", "15")
+
+     }
+     d3.csv("notas.csv",vercsv1)
+
+    // console.log("miayd " + a["intervalo"])
+    // // var parsed = d3.csvParse(data);
+
+    soy_array = []
+    soy_array2 = []
+
+    function perro(data){
+        data.forEach(function (d) {
+            soy_array.push(d.intervalo)
+            soy_array2.push(d.cantidad)
+        })
+    }
+
+    d3.csv("notas.csv",perro)
+    console.log(soy_array)
+    console.log(soy_array2)
+
+    function vercsv(data){
+        // console.log(data)
+        // esto es lo mas complejo de entender en d3
+        // svgG = d3.select("svg")
+        // .selectAll("rect")
+        // .data(soy_array2)
+        // // dsps del enter se asigna a cada elemento que quedo sin pareja se le añade un rect con esos atributos
+        // .enter().append("rect")
+        // .attr("width", 50)
+        // .attr("height", function (d) {
+        //     return d*30;
+        // })
+        // .attr("x", function (d, i) {
+        //     return i * 60;
+        // })
+        // .attr("y", function (d, i) {
+        //     return 500 - d*30;
+        // })
+        // .attr("rx", "0")
+        // .attr("ry", "0")
+        // .style("fill", "orange")
+        // .style("stroke", "black")
+        // .style("stroke-width", "1px")
+        // .style("opacity", 1)
+        //
+        //
+        // svgG.append("text")
+        //     .style("font-size", "20px")
+        //     .text(function (d) {
+        //         return d;
+        //     })
+        //     .attr("y", function (d) {
+        //         return d;
+        //     })
+        // ;
+
+        svgG = d3.select("svg")
+            .selectAll("g")
+            .data(soy_array2)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(" +
+                    (i * 50) + "," + (500-d*25)
+                    + ")";
+            });
+
+        // aca a cada uno de los grupos que generamos le damos los rectangulos y el estilo que queramos, ahora la pos x e y no dpeneden del svg general sino que depende de lo que pase al intenrior del grupo
+        svgG.append("rect")
+            .attr("width", 40)
+            .attr("height", function (d) {
+                return d*25;
+            })
+            .style("fill", "orange")
+            .style("stroke", "black")
+            .style("stroke-width", "1.5px")
+            .style("opacity", 1)
+        ;
+        //
+        svgG.append("text")
+            .style("font-size", "20px")
+            .text(function (d) {
+                return d;
+            })
+            .attr("y", function (d) {
+                return d-15;
+            })
+            .attr("x", function (d) {
+                return 15;
+            });
+        // svgG.data(soy_array1)
+
+
+
+        svgG2 = d3.select("svg")
+            .selectAll("g")
+            .data(soy_array)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(" +
+                    (i * 50) + "," + (500-d*25)
+                    + ")";
+            });
+        
+        svgG2.append("text")
+            .style("font-size", "20px")
+            .text(function (d) {
+                return d;
+            })
+            .attr("y", function (d) {
+
+                return 100;
+            })
+            .attr("x", function (d) {
+                return 1;
+            });
+
+    }
+    d3.csv("notas.csv",vercsv)
+</script>
+</body>
+</html>
